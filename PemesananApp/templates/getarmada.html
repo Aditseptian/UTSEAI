@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pesanan</title>
+</head>
+<body>
+    <h1>Daftar Armada</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Pesanan</th>
+                <th>Jenis</th>
+                <th>Status</th>
+                <th>Kondisi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in armada %}
+            <tr>
+                <td>{{ i["ID_Kendaraan"] }}</td>
+                <td>{{ i["Jenis"] }}</td>
+                <td>{{ i["Status"] }}</td>
+                <td>{{ i["Kondisi"] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
