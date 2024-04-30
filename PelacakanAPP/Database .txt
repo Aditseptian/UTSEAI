@@ -1,0 +1,15 @@
+Database :
+
+CREATE TABLE package (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tracking_number VARCHAR(255) NOT NULL,
+    courier_name VARCHAR(255) NOT NULL,
+    status VARCHAR(100) NOT NULL,
+    location VARCHAR(255) NOT NULL
+);
+
+
+INSERT INTO package (id, tracking_number, courier_name, status, location) VALUES
+(1, 'ABC123', 'JNE', 'Delivered', 'Jakarta'),
+(2, 'DEF456', 'Tiki', 'On the way', 'Surabaya'),
+(3, 'GHI789', 'Pos Indonesia', 'In transit', 'Bandung');
