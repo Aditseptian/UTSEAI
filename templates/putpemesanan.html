@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Pesanan</title>
+</head>
+<body>
+    <h1>Edit Pesanan</h1>
+    <form action="/orders/{{ order_id }}" method="post">
+        <label for="nama_barang">Nama Barang:</label>
+        <input type="text" id="nama_barang" name="nama_barang" value="{{ order.nama_barang }}"><br>
+        <label for="pengirim">Pengirim:</label>
+        <input type="text" id="pengirim" name="pengirim" value="{{ order.pengirim }}"><br>
+        <label for="penerima">Penerima:</label>
+        <input type="text" id="penerima" name="penerima" value="{{ order.penerima }}"><br>
+        <label for="alamat_penerima">Alamat Penerima:</label>
+        <input type="text" id="alamat_penerima" name="alamat_penerima" value="{{ order.alamat_penerima }}"><br>
+        <label for="berat">Berat:</label>
+        <input type="text" id="berat" name="berat" value="{{ order.berat }}"><br>
+        <label for="jenis_kendaraan">Jenis Kendaraan:</label>
+        <input type="text" id="jenis_kendaraan" name="jenis_kendaraan" value="{{ order.jenis_kendaraan }}"><br>
+        <label for="tanggal_pemesanan">Tanggal Pemesanan:</label>
+        <input type="text" id="tanggal_pemesanan" name="tanggal_pemesanan" value="{{ order.tanggal_pemesanan }}"><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

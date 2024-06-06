@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, redirect, render_template, jsonify, request, url_for
 import requests
 
 app = Flask(__name__)
@@ -16,40 +16,50 @@ def index():
 # Rute untuk mendapatkan semua pesanan
 @app.route('/orders', methods=['GET'])
 def get_orders():
-    orders_response = requests.get(f'http://127.0.0.1:5000/orders')
-    return orders_response.json()
+    response = requests.get('http://127.0.0.1:3000/orders')
+    return response.json(), response.status_code
 
 # Rute untuk membuat pesanan baru
-@app.route('/orders', methods=['POST'])
+@app.route('/create_order', methods=['GET', 'POST'])
 def create_order():
-    data = requests.get_json()
-    orders_response = requests.post('http://127.0.0.1:5000/orders', json=data)
-    return orders_response.json(), orders_response.status_code
+    if request.method == 'POST':
+        data = request.form
+        response = requests.post('http://127.0.0.1:3000/orders', json=data)
+        return redirect(f'http://127.0.0.1:3000/orders/{response.json()["id_pemesanan"]}')  # Redirect ke halaman detail pesanan di port 3000
+    return render_template('postpemesanan.html')
 
 # Rute untuk mendapatkan detail pesanan
 @app.route('/orders/<int:order_id>')
 def get_order(order_id):
-    orders_response = requests.get(f'http://127.0.0.1:5000/orders/{order_id}')
+    orders_response = requests.get(f'http://127.0.0.1:3000/orders/{order_id}')
     return orders_response.json(), orders_response.status_code
 
 # Rute untuk mengupdate pesanan
-@app.route('/orders/<int:order_id>', methods=['PUT'])
+@app.route('/update_order/<int:order_id>', methods=['GET', 'POST'])
 def update_order(order_id):
-    data = requests.get_json()
-    orders_response = requests.put(f'http://127.0.0.1:5000/orders/{order_id}', json=data)
-    return orders_response.json(), orders_response.status_code
+    if request.method == 'POST':
+        data = request.form
+        response = requests.put(f'http://127.0.0.1:3000/orders/{order_id}', json=data)
+        return redirect(f'http://127.0.0.1:3000/orders/{order_id}')  # Redirect ke halaman detail pesanan di port 3000
+    response = requests.get(f'http://127.0.0.1:3000/orders/{order_id}')
+    order = response.json()
+    return render_template('putpemesanan.html', order=order)
 
-# Rute untuk menghapus pesanan
-@app.route('/orders/<int:order_id>', methods=['DELETE'])
+@app.route('/delete_order/<int:order_id>', methods=['POST'])
 def delete_order(order_id):
-    orders_response = requests.delete(f'http://127.0.0.1:5000/orders/{order_id}')
-    return orders_response.json(), orders_response.status_code
+    orders_response = requests.delete(f'http://127.0.0.1:3000/orders/{order_id}')
+    return redirect(url_for('index'))
 
 # Rute untuk mendapatkan paket
 @app.route('/package')
 def get_packages():
-    packages_response = requests.get('http://127.0.0.1:5000/package')
-    return packages_response.json(), packages_response.status_code
+    try:
+        packages_response = requests.get('http://127.0.0.1:3001/package')
+        packages_response.raise_for_status()  # Raise error jika status code bukan 200
+        return render_template('getpelacakan.html')
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": "Failed to fetch package data"}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
