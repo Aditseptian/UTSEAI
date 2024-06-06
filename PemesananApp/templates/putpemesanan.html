@@ -7,7 +7,9 @@
 </head>
 <body>
     <h1>Edit Pesanan</h1>
-    <form action="/orders/{{ order_id }}" method="post">
+    <form action="{{ url_for('update_order', order_id=order['id_pemesanan']) }}" method="POST">
+        <label for="nama_barang">Nama Barang:</label>
+        <input type="text" id="nama_barang" name="nama_barang" value="{{ order.nama_barang }}"><br>
         <label for="nama_barang">Nama Barang:</label>
         <input type="text" id="nama_barang" name="nama_barang" value="{{ order.nama_barang }}"><br>
         <label for="pengirim">Pengirim:</label>

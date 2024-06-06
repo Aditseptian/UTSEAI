@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask import render_template
 from flask_mysqldb import MySQL
 from datetime import datetime
 
@@ -8,6 +9,7 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'package'
+
 
 mysql = MySQL(app)
 
@@ -56,8 +58,8 @@ def get_packages():
         'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         'data': package_list
     }
-    return jsonify(response)
+    return render_template('getpelacakan.html', packages =package_list)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=3001)

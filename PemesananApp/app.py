@@ -16,8 +16,7 @@ app.config['MYSQL_DB'] = 'logistik'
 
 mysql = MySQL(app)
 
-
-@app.route('/orders', methods=['GET'])
+@app.route('/orders', methods=['GET', 'POST'])
 def get_orders():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM pemesanan")
@@ -56,19 +55,38 @@ def get_order(order_id):
         return jsonify({'message': 'Pemesanan tidak ditemukan'}), 404
     
 
-
-
-@app.route('/orders/<int:order_id>', methods=['PUT'])
+@app.route('/orders/<int:order_id>', methods=['GET', 'PUT'])
 def update_order(order_id):
-    data = request.get_json()
-    cur = mysql.connection.cursor()
-    cur.execute("UPDATE pemesanan SET nama_barang = %s, pengirim = %s, penerima = %s, alamat_penerima = %s, berat = %s, jenis_kendaraan = %s, tanggal_pemesanan = %s WHERE id_pemesanan = %s", (data['nama_barang'], data['pengirim'], data['penerima'], data['alamat_penerima'], data['berat'], data['jenis_kendaraan'], data['tanggal_pemesanan'], order_id))
-    mysql.connection.commit()
-    cur.close()
-    if cur.rowcount > 0:
-        return jsonify({'message': 'Pemesanan berhasil diperbarui'})
-    else:
-        return jsonify({'message': 'Pemesanan tidak ditemukan'}), 404
+    if request.method == 'PUT':
+        data = request.get_json()
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "UPDATE pemesanan SET nama_barang = %s, pengirim = %s, penerima = %s, alamat_penerima = %s, berat = %s, jenis_kendaraan = %s, tanggal_pemesanan = %s WHERE id_pemesanan = %s",
+            (data['nama_barang'], data['pengirim'], data['penerima'], data['alamat_penerima'], data['berat'], data['jenis_kendaraan'], data['tanggal_pemesanan'], order_id)
+        )
+        mysql.connection.commit()
+        cur.close()
+        if cur.rowcount > 0:
+            return jsonify({'message': 'Pemesanan berhasil diperbarui'})
+        else:
+            return jsonify({'message': 'Pemesanan tidak ditemukan'}), 404
+    else:  # GET request
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM pemesanan WHERE id_pemesanan = %s", (order_id,))
+        order_data = cur.fetchone()  # Ganti nama variabel menjadi order_data
+        cur.close()
+
+        if order_data:
+            # Konversi order_data menjadi dictionary dengan nama kolom sebagai key
+            order = dict(zip([column[0] for column in cur.description], order_data))
+            return render_template('putpemesanan.html', order=order)  # Render template untuk edit
+        else:
+            return jsonify({'message': 'Pemesanan tidak ditemukan'}), 404
+
+
+
+
+    
 
 
 @app.route('/orders/<int:order_id>', methods=['DELETE'])
@@ -82,52 +100,11 @@ def delete_order(order_id):
     else:
         return jsonify({'message': 'Pemesanan tidak ditemukan'}), 404
     
-@app.route('/package', methods=['GET'])
-def get_packages():
-    cur = mysql.connection.cursor()
+
     
-    # Mendapatkan parameter pencarian dari query string
-    tracking_number = request.args.get('tracking_number')
-    courier_name = request.args.get('courier_name')
-    status = request.args.get('status')
-    package_id = request.args.get('id')
+    
 
-    # Membuat query dasar
-    query = 'SELECT id, tracking_number, courier_name, status, location FROM package WHERE 1'
-
-    # Menambahkan filter ke query berdasarkan parameter pencarian yang diterima
-    if package_id:
-        query += f" AND id = {package_id}"
-    if tracking_number:
-        query += f" AND tracking_number = '{tracking_number}'"
-    if courier_name:
-        query += f" AND courier_name = '{courier_name}'"
-    if status:
-        query += f" AND status = '{status}'"
-
-    cur.execute(query)
-    packages = cur.fetchall()
-    cur.close()
-
-    package_list = []
-    for package in packages:
-        package_data = {
-            'id': package[0],
-            'tracking_number': package[1],
-            'courier_name': package[2],
-            'status': package[3],
-            'location' : package[4]
-        }
-        package_list.append(package_data)
-
-    response = {
-        'status_code': 200,
-        'message': 'Success',
-        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-        'data': package_list
-    }
-    return jsonify(response)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=3000)

@@ -18,6 +18,7 @@
                 <th>Berat</th>
                 <th>Jenis Kendaraan</th>
                 <th>Tanggal Pemesanan</th>
+                <th>Aksi</th>  
             </tr>
         </thead>
         <tbody>
@@ -31,6 +32,12 @@
                 <td>{{ o[5] }}</td>
                 <td>{{ o[6] }}</td>
                 <td>{{ o[7] }}</td>
+                <td>
+                    <a href="{{ url_for('update_order', order_id=o[0]) }}">Edit</a> | 
+                    <form method="POST" action="{{ url_for('delete_order', order_id=o[0]) }}" style="display: inline;"> 
+                        <button type="submit">Hapus</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

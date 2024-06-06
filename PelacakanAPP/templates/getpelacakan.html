@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pesanan</title>
+</head>
+<body>
+    <h1>Daftar Armada</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Pesanan</th>
+                <th>Kurir</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>NoResi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in armada %}
+            <tr>
+                <td>{{ i["id"] }}</td>
+                <td>{{ i["courier_name"] }}</td>
+                <td>{{ i["location"] }}</td>
+                <td>{{ i["status"] }}</td>
+                <td>{{ i["tracking_number"] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
