@@ -1,0 +1,28 @@
+version: '3'
+services:
+  express-service:
+    build:
+      context: ./ManageApp
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      DB_HOST: mysql-2798d337-student-ded3.d.aivencloud.com
+      DB_USER: avnadmin
+      DB_PASSWORD: AVNS_We6gfnhE5bvYwk_cHg2
+      DB_DATABASE: UTS-EAI
+      DB_PORT: 17428
+
+  flask-service:
+    build:
+      context: ./
+    ports:
+      - "5000:5000"
+    depends_on:
+      - express-service
+    environment:
+      DB_HOST: localhost
+      DB_USER: root
+      DB_PASSWORD: ''
+      DB_DATABASE: logistik
+      DB_PORT: 3306

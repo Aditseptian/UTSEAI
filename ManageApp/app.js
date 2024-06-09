@@ -7,6 +7,9 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var armadaRouter = require('./routes/armada');
 var masalahRouter = require('./routes/masalah');
+var tambahArmadaRouter = require('./routes/tambahArmada');
+var updateStatusRouter = require('./routes/updateStatus');
+var deleteArmadaRouter = require('./routes/deleteArmada');
 
 var app = express();
 
@@ -22,7 +25,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/armada', armadaRouter);
+app.use('/tambah-armada', tambahArmadaRouter);
+app.use('/hapus-armada', deleteArmadaRouter);
 app.use('/armada', masalahRouter);
+app.use('/update-status', updateStatusRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
