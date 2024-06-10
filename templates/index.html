@@ -4,17 +4,129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff9db; /* Warna background kuning */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-size: 1.8em;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 15px 0;
+        }
+
+        a {
+            display: inline-block;
+            color: #d4a017; /* Warna kuning */
+            text-decoration: none;
+            font-weight: bold;
+            padding: 15px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border: 2px solid #d4a017; /* Warna border kuning */
+        }
+
+        a:hover {
+            background-color: #d4a017; /* Warna kuning saat hover */
+            color: #fff; /* Warna teks putih saat hover */
+            transform: scale(1.05);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff; /* Warna background putih */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #fff3cd; /* Warna kuning muda */
+            border-radius: 8px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+        .btn:hover {
+            transform: translateY(-3px); /* Menggeser tombol ke atas saat hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Efek bayangan saat hover */
+        }
+        .fade-in {
+            opacity: 0;
+            animation: fadeInAnimation 1s ease-in forwards;
+        }
+
+        @keyframes fadeInAnimation {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Selamat Datang di Main App</h1>
-    <h2>Layanan Pemesanan</h2>
-    <ul>
-        <li><a href="http://127.0.0.1:3000/orders">Lihat Semua Pesanan</a></li>
-        <li><a href="/create_order">Buat Pesanan Baru</a></li>
-    </ul>
-    <h2>Layanan Pelacakan</h2>
-    <ul>
-        <li><a href="http://127.0.0.1:3001/package">Pelacakan Paket</a></li>
-    </ul>
+    <div class="container">
+        <h1>Selamat Datang</h1>
+        
+        <div class="section">
+            <h2>Layanan Pemesanan</h2>
+            <ul>
+                <li><a href="/orders">Lihat Semua Pesanan</a></li>
+                <li><a href="/create_order">Buat Pesanan Baru</a></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Layanan Pelacakan</h2>
+            <ul>
+                <li><a href="http://127.0.0.1:3001/package">Pelacakan Paket</a></li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        // Efek tambahan untuk tombol saat hover dengan JavaScript
+        var buttons = document.querySelectorAll('.btn'); // Ambil semua elemen dengan kelas "btn"
+        buttons.forEach(function(button) {
+            button.addEventListener('mouseover', function() {
+                this.style.backgroundColor = '#ffd700'; // Ubah warna background saat hover
+            });
+
+            button.addEventListener('mouseout', function() {
+                this.style.backgroundColor = '#d4a017'; // Kembalikan warna background saat mouse meninggalkan tombol
+            });
+
+        });
+    </script>
 </body>
 </html>
