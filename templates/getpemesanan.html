@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pesanan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff9db;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #d4a017;
+            color: #fff;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        a {
+            color: #d4a017;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            background-color: #ff4c4c;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff1c1c;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions form {
+            display: inline;
+        }
+
+        .actions a, .actions button {
+            padding: 8px 12px;
+        }
+
+        .footer {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Daftar Pesanan</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Pesanan</th>
+                <th>Nama Barang</th>
+                <th>Pengirim</th>
+                <th>Penerima</th>
+                <th>Alamat Penerima</th>
+                <th>Berat</th>
+                <th>Jenis Kendaraan</th>
+                <th>Tanggal Pemesanan</th>
+                <th>Aksi</th>  
+            </tr>
+        </thead>
+        <tbody>
+            {% for o in orders %}
+            <tr>
+                <td>{{ o.id_pemesanan }}</td>
+                <td>{{ o.nama_barang }}</td>
+                <td>{{ o.pengirim }}</td>
+                <td>{{ o.penerima }}</td>
+                <td>{{ o.alamat_penerima }}</td>
+                <td>{{ o.berat }}</td>
+                <td>{{ o.jenis_kendaraan }}</td>
+                <td>{{ o.tanggal_pemesanan }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('edit_order', order_id=o.id_pemesanan) }}">Edit</a>
+                    <form method="POST" action="{{ url_for('delete_order', order_id=o.id_pemesanan) }}">
+                        <button type="submit">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <a href="create_order">Tambah Pesanan</a>
+    </div>
+    
+</body>
+</html>

@@ -4,25 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Pesanan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff9db; /* Warna background kuning */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333; /* Warna teks hitam */
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        button {
+            background-color: #d4a017; /* Warna kuning gold */
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            align-self: flex-start;
+        }
+
+        button:hover {
+            background-color: #ffd700; /* Warna kuning muda saat hover */
+        }
+
+        a {
+            color: #d4a017; /* Warna kuning gold */
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <h1>Edit Pesanan</h1>
-    <form action="/orders/{{ order_id }}" method="post">
+    <form action="{{ url_for('edit_order', order_id=order['id_pemesanan']) }}" method="post">
         <label for="nama_barang">Nama Barang:</label>
-        <input type="text" id="nama_barang" name="nama_barang" value="{{ order.nama_barang }}"><br>
+        <input type="text" id="nama_barang" name="nama_barang" value="{{ order['nama_barang'] }}" required>
+        <br>
         <label for="pengirim">Pengirim:</label>
-        <input type="text" id="pengirim" name="pengirim" value="{{ order.pengirim }}"><br>
+        <input type="text" id="pengirim" name="pengirim" value="{{ order['pengirim'] }}" required>
+        <br>
         <label for="penerima">Penerima:</label>
-        <input type="text" id="penerima" name="penerima" value="{{ order.penerima }}"><br>
+        <input type="text" id="penerima" name="penerima" value="{{ order['penerima'] }}" required>
+        <br>
         <label for="alamat_penerima">Alamat Penerima:</label>
-        <input type="text" id="alamat_penerima" name="alamat_penerima" value="{{ order.alamat_penerima }}"><br>
+        <input type="text" id="alamat_penerima" name="alamat_penerima" value="{{ order['alamat_penerima'] }}" required>
+        <br>
         <label for="berat">Berat:</label>
-        <input type="text" id="berat" name="berat" value="{{ order.berat }}"><br>
+        <input type="text" id="berat" name="berat" value="{{ order['berat'] }}" required>
+        <br>
         <label for="jenis_kendaraan">Jenis Kendaraan:</label>
-        <input type="text" id="jenis_kendaraan" name="jenis_kendaraan" value="{{ order.jenis_kendaraan }}"><br>
+        <input type="text" id="jenis_kendaraan" name="jenis_kendaraan" value="{{ order['jenis_kendaraan'] }}" required>
+        <br>
         <label for="tanggal_pemesanan">Tanggal Pemesanan:</label>
-        <input type="text" id="tanggal_pemesanan" name="tanggal_pemesanan" value="{{ order.tanggal_pemesanan }}"><br>
-        <button type="submit">Submit</button>
+        <input type="date" id="tanggal_pemesanan" name="tanggal_pemesanan" value="{{ order['tanggal_pemesanan'] }}" required>
+        <br>
+        <button type="submit">Update</button>
     </form>
+    <a href="/">Kembali ke Daftar Pesanan</a>
 </body>
 </html>

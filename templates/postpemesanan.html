@@ -4,24 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buat Pesanan Baru</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f3d2; /* Warna background gold */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #604e2a; /* Warna teks dark brown */
+            margin-top: 20px;
+        }
+
+        form {
+            background-color: #fff; /* Warna background putih */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #604e2a; /* Warna teks dark brown */
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        button {
+            background-color: #ffd700; /* Warna background gold */
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            align-self: flex-start;
+        }
+
+        button:hover {
+            background-color: #cca300; /* Warna background gold yang sedikit gelap */
+        }
+    </style>
 </head>
 <body>
     <h1>Buat Pesanan Baru</h1>
-    <form action="http://127.0.0.1:3000/orders" method="POST"> 
+    <form action="{{ url_for('create_order') }}" method="POST"> 
         <label for="nama_barang">Nama Barang:</label>
-        <input type="text" id="nama_barang" name="nama_barang"><br>
+        <input type="text" id="nama_barang" name="nama_barang" required>
+
         <label for="pengirim">Pengirim:</label>
-        <input type="text" id="pengirim" name="pengirim"><br>
+        <input type="text" id="pengirim" name="pengirim" required>
+
         <label for="penerima">Penerima:</label>
-        <input type="text" id="penerima" name="penerima"><br>
+        <input type="text" id="penerima" name="penerima" required>
+
         <label for="alamat_penerima">Alamat Penerima:</label>
-        <input type="text" id="alamat_penerima" name="alamat_penerima"><br>
+        <input type="text" id="alamat_penerima" name="alamat_penerima" required>
+
         <label for="berat">Berat:</label>
-        <input type="text" id="berat" name="berat"><br>
+        <input type="text" id="berat" name="berat" required>
+
         <label for="jenis_kendaraan">Jenis Kendaraan:</label>
-        <input type="text" id="jenis_kendaraan" name="jenis_kendaraan"><br>
+        <input type="text" id="jenis_kendaraan" name="jenis_kendaraan" required>
+
         <label for="tanggal_pemesanan">Tanggal Pemesanan:</label>
-        <input type="date" id="tanggal_pemesanan" name="tanggal_pemesanan"><br>
+        <input type="date" id="tanggal_pemesanan" name="tanggal_pemesanan" required>
+
         <button type="submit">Submit</button>
     </form>
 </body>
